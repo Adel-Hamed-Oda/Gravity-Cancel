@@ -4,6 +4,7 @@ public class JumpController : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private GroundedChecker groundedChecker;
+    [SerializeField] private GameObject jumpParticlesPrefab;
 
     [Header("Jump Settings")]
     public float jumpForce = 5.0f;
@@ -41,6 +42,8 @@ public class JumpController : MonoBehaviour
         // Clamp vertical velocity while preserving horizontal velocity
         float clampedY = Mathf.Clamp(rb.linearVelocity.y, -maxVerticalSpeed, maxVerticalSpeed);
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, clampedY);
+
+        Instantiate(jumpParticlesPrefab, transform.position, Quaternion.identity);
 
         remainingJumps--;
         jumpDelayTimer = jumpDelay;

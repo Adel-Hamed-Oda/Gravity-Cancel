@@ -13,7 +13,8 @@ public class HorizontalMovementController : MonoBehaviour
     public float AirborneDeceleration = 15.0f;
 
     private float horizontalInput;
-    private float currentHorizontalSpeed;
+
+    [HideInInspector] public float CurrentHorizontalSpeed;
 
     private void Update()
     {
@@ -25,54 +26,37 @@ public class HorizontalMovementController : MonoBehaviour
         float targetSpeed = horizontalInput * horizontalMaxSpeed;
         float chosenRate;
 
-        // Check if input is in the opposite direction of current movement
-        bool isChangingDirection = (horizontalInput != 0) && (currentHorizontalSpeed * horizontalInput < 0);
+        bool isChangingDirection = (horizontalInput != 0) && (CurrentHorizontalSpeed * horizontalInput < 0);
 
         if (isChangingDirection)
         {
-            // Rapid turn-around braking rate
             chosenRate = GetDeceleration() + GetAcceleration();
         }
         else if (horizontalInput == 0)
         {
-            // Coasting to a stop
             chosenRate = GetDeceleration();
         }
         else
         {
-            // Normal acceleration
             chosenRate = GetAcceleration();
         }
 
-        currentHorizontalSpeed = Mathf.MoveTowards(
-            currentHorizontalSpeed,
+        CurrentHorizontalSpeed = Mathf.MoveTowards(
+            CurrentHorizontalSpeed,
             targetSpeed,
             chosenRate * Time.fixedDeltaTime
         );
 
-        rb.linearVelocity = new Vector2(currentHorizontalSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(CurrentHorizontalSpeed, rb.linearVelocity.y);
     }
 
     private float GetAcceleration()
     {
-        if (groundedChecker != null && !groundedChecker.IsGrounded)
-        {
-            return AirborneAcceleration;
-        }
-        else
-        {
-            return GroundedAcceleration;
-        }
+        return (groundedChecker != null && !groundedChecker.IsGrounded) ? AirborneAcceleration : GroundedAcceleration;
     }
+
     private float GetDeceleration()
     {
-        if (groundedChecker != null && !groundedChecker.IsGrounded)
-        {
-            return AirborneDeceleration;
-        }
-        else
-        {
-            return GroundedDeceleration;
-        }
+        return (groundedChecker != null && !groundedChecker.IsGrounded) ? AirborneDeceleration : GroundedDeceleration;
     }
 }

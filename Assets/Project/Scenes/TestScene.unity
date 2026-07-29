@@ -213,6 +213,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1024955158}
+  - {fileID: 847868813}
   - {fileID: 249397973}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -695,6 +696,56 @@ Transform:
   - {fileID: 1640559621}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &847868812
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 847868813}
+  - component: {fileID: 847868814}
+  m_Layer: 0
+  m_Name: SpecialMovement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &847868813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847868812}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 178770437}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &847868814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847868812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 773510fdded9ada4db61721bdcce67e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashController
+  horizontalMovementController: {fileID: 1024955159}
+  mainCamera: {fileID: 519420031}
+  dashParticlesPrefab: {fileID: 2105100796810640358, guid: 58fc98d035fd46543afdbd20f74f862b, type: 3}
+  dashSpeed: 10
+  dashCooldown: 1
+  dashStaminaReduction: 25
 --- !u!1 &884133417
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,6 +863,7 @@ MonoBehaviour:
   AirborneAcceleration: 15
   GroundedDeceleration: 10
   AirborneDeceleration: 10
+  CurrentHorizontalSpeed: 0
 --- !u!114 &1024955160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -826,6 +878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumpController
   rb: {fileID: 178770440}
   groundedChecker: {fileID: 1024955161}
+  jumpParticlesPrefab: {fileID: 2105100796810640358, guid: 58fc98d035fd46543afdbd20f74f862b, type: 3}
   jumpForce: 20
   maxJumps: 1
   jumpDelay: 0.1
