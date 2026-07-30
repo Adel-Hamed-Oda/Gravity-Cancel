@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class DashController : MonoBehaviour
 {
+    [SerializeField] private PlayerController playerController;
     [SerializeField] private HorizontalMovementController horizontalMovementController;
+    [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject dashParticlesPrefab;
 
@@ -18,7 +20,7 @@ public class DashController : MonoBehaviour
     {
         dashCooldownTimer -= Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Z) && dashCooldownTimer <= 0)
+        if (Input.GetKey(KeyCode.Z) && dashCooldownTimer <= 0 && playerController.CurrentStamina >= dashStaminaReduction)
         {
             Dash();
         }
@@ -36,9 +38,13 @@ public class DashController : MonoBehaviour
         Vector2 dashDirection;
         dashDirection = offset.x > 0 ? Vector2.right : Vector2.left;
 
+        rb.linearVelocity = Vector2.zero;
         horizontalMovementController.CurrentHorizontalSpeed = dashDirection.x * dashSpeed;
         dashCooldownTimer = dashCooldown;
 
-        Instantiate(dashParticlesPrefab, transform.position, Quaternion.identity);
+        playerController.ReduceStamina(dashStaminaReduction);
+
+        GameObject dashParticles = Instantiate(dashParticlesPrefab, transform);
+        dashParticles.transform.localScale = new Vector3(dashDirection.x, dashParticles.transform.localScale.y, dashParticles.transform.localScale.z);
     }
 }

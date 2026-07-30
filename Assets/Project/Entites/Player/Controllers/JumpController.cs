@@ -43,7 +43,7 @@ public class JumpController : MonoBehaviour
         float clampedY = Mathf.Clamp(rb.linearVelocity.y, -maxVerticalSpeed, maxVerticalSpeed);
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, clampedY);
 
-        Instantiate(jumpParticlesPrefab, transform.position, Quaternion.identity);
+        Instantiate(jumpParticlesPrefab, transform);
 
         remainingJumps--;
         jumpDelayTimer = jumpDelay;

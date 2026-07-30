@@ -1,3 +1,4 @@
+using Microlight.MicroBar;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine;
 public class PlayerController : Entity
 {
     public event Action OnPlayerDeath;
+
+    [SerializeField] private GroundedChecker groundedChecker;
+    [SerializeField] private MicroBar staminaBar;
 
     [Header("Stamina Settings")]
     [SerializeField] private float maxStamina = 100f;
@@ -18,11 +22,13 @@ public class PlayerController : Entity
     private void Start()
     {
         CurrentStamina = maxStamina;
+        staminaBar.Initialize(maxStamina);
     }
 
     public void ReduceStamina(float amount)
     {
         CurrentStamina = Mathf.Max(0f, CurrentStamina - amount);
+        staminaBar.UpdateBar(CurrentStamina);
 
         if (staminaRegenRoutine != null)
         {
@@ -40,8 +46,15 @@ public class PlayerController : Entity
 
         while (CurrentStamina < maxStamina)
         {
+            if (groundedChecker != null && !groundedChecker.IsGrounded)
+            {
+                yield return null;
+                continue;
+            }
+
             rate += staminaRegenAccel * Time.deltaTime;
             CurrentStamina = Mathf.Min(maxStamina, CurrentStamina + rate);
+            staminaBar.UpdateBar(CurrentStamina);
 
             yield return null;
         }
