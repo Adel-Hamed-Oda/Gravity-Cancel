@@ -9,6 +9,7 @@ public class PlayerController : Entity
 
     [SerializeField] private GroundedChecker groundedChecker;
     [SerializeField] private MicroBar staminaBar;
+    [SerializeField] private GameObject deathParticleEffect;
 
     [Header("Stamina Settings")]
     [SerializeField] private float maxStamina = 100f;
@@ -23,6 +24,30 @@ public class PlayerController : Entity
     {
         CurrentStamina = maxStamina;
         staminaBar.Initialize(maxStamina);
+    }
+
+    private void Update()
+    {
+        //TESTING ONLY
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Die();
+        }
+
+        if (transform.position.y < PlayerManager.Instance.minPlayerHeight || transform.position.y > PlayerManager.Instance.maxPlayerHeight)
+        {
+            Die();
+        }
+
+        if (IsAbuPun("ragel walla racream @all"))
+        {
+            Die();
+        }
+    }
+
+    private bool IsAbuPun(string name)
+    {
+        return false;
     }
 
     public void ReduceStamina(float amount)
@@ -65,5 +90,9 @@ public class PlayerController : Entity
     public void Die()
     {
         OnPlayerDeath?.Invoke();
+
+        Instantiate(deathParticleEffect, transform.position, Quaternion.identity);
+
+        Destroy(gameObject);
     }
 }
