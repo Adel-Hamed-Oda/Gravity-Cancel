@@ -5,7 +5,6 @@ public class TeleportDashController : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Camera mainCamera;
 
     [Header("Controllers to Disable")]
     [SerializeField] private HorizontalMovementController horizontalMovementController;
@@ -44,12 +43,10 @@ public class TeleportDashController : MonoBehaviour
 
     private void AttemptTeleport()
     {
-        if (mainCamera == null) return;
-
         // 1. Determine direction based on mouse position
         Vector3 mouseScreenPosition = Input.mousePosition;
-        mouseScreenPosition.z = -mainCamera.transform.position.z;
-        Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
+        mouseScreenPosition.z = -Camera.main.transform.position.z;
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
 
         Vector2 offset = mouseWorldPosition - transform.position;
         Vector2 dashDirection = offset.x > 0 ? Vector2.right : Vector2.left;

@@ -73,7 +73,7 @@ public class SprintController : MonoBehaviour
             horizontalMovementController.AirborneAcceleration = baseAirborneAcc * sprintAccelerationMultiplier;
             horizontalMovementController.GroundedAcceleration = baseGroundedAcc * sprintAccelerationMultiplier;
             horizontalMovementController.AirborneDeceleration = baseAirborneDec * sprintDecelerationMultiplier;
-            horizontalMovementController.GroundedDeceleration = baseAirborneDec * sprintDecelerationMultiplier;
+            horizontalMovementController.GroundedDeceleration = baseGroundedDec * sprintDecelerationMultiplier;
 
             SetParticleSystemActive(true);
         }

@@ -5,22 +5,16 @@ public class PlayerManager : Manager<PlayerManager>
 {
     [SerializeField] private GameObject playerPrefab;
 
-    public int maxPlayerHeight = 10;
-    public int minPlayerHeight = -10;
+    public int maxPlayerHeight;
+    public int minPlayerHeight;
     public float playerRespawnDelay = 3f;
 
-    [Header("public variables that SHOULDN'T be changed")]
     public bool canSprint = false;
     public bool canDash = false;
     public bool canTeleportDash = false;
     public bool canGravityCancel = false;
 
     private GameObject playerInstance;
-
-    private void Start()
-    {
-        SpawnPlayer();
-    }
 
     public void SpawnPlayer(Vector2 position = default)
     {
@@ -29,6 +23,11 @@ public class PlayerManager : Manager<PlayerManager>
         playerInstance = Instantiate(playerPrefab, position, Quaternion.identity);
         playerInstance.GetComponent<PlayerController>().TeamColor = Color.green;
         playerInstance.GetComponent<PlayerController>().OnPlayerDeath += HandlePlayerDeath;
+
+        playerInstance.GetComponentInChildren<SprintController>().enabled = canSprint;
+        playerInstance.GetComponentInChildren<DashController>().enabled = canDash;
+        playerInstance.GetComponentInChildren<TeleportDashController>().enabled = canTeleportDash;
+        playerInstance.GetComponentInChildren<GravityCancel>().enabled = canGravityCancel;
     }
 
     private void HandlePlayerDeath()

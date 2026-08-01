@@ -28,6 +28,7 @@ public class GravityCancel : MonoBehaviour
     private void CancelGravity()
     {
         GravityManager.Instance.DisableGravity();
+        gravityCancelCooldownTimer = 9999; // IDK why but it's funny
 
         maxUpSpeedBeforeCancel = speedLimitController.maxUpSpeed;
         maxDownSpeedBeforeCancel = speedLimitController.maxDownSpeed;

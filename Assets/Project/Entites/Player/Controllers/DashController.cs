@@ -6,7 +6,6 @@ public class DashController : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private HorizontalMovementController horizontalMovementController;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject dashParticlesPrefab;
 
     [Header("Dash Settings")]
@@ -28,11 +27,11 @@ public class DashController : MonoBehaviour
 
     private void Dash()
     {
-        if (mainCamera == null || horizontalMovementController == null) return;
+        if (horizontalMovementController == null) return;
 
         Vector3 mouseScreenPosition = Input.mousePosition;
-        mouseScreenPosition.z = -mainCamera.transform.position.z;
-        Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
+        mouseScreenPosition.z = -Camera.main.transform.position.z;
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
 
         Vector2 offset = mouseWorldPosition - transform.position;
         Vector2 dashDirection;

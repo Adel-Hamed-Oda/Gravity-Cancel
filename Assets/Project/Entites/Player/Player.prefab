@@ -200,7 +200,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981607228295533440}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df532680a219aa1408e5c89048cadfcc, type: 3}
   m_Name: 
@@ -811,7 +811,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6440153436510376338}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 773510fdded9ada4db61721bdcce67e0, type: 3}
   m_Name: 
@@ -819,9 +819,8 @@ MonoBehaviour:
   playerController: {fileID: 7451549505605558886}
   horizontalMovementController: {fileID: 4629942635720439075}
   rb: {fileID: 2279442337464375384}
-  mainCamera: {fileID: 0}
   dashParticlesPrefab: {fileID: 2105100796810640358, guid: 1a7554da06ecf6e40a0418d1e45044f3, type: 3}
-  dashSpeed: 10
+  dashSpeed: 15
   dashCooldown: 0.5
   dashStaminaReduction: 25
 --- !u!114 &8302225680823114235
@@ -831,14 +830,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6440153436510376338}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11669ba17c611d64a8fa79a5d889b15c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeleportDashController
   playerController: {fileID: 7451549505605558886}
   rb: {fileID: 2279442337464375384}
-  mainCamera: {fileID: 0}
   horizontalMovementController: {fileID: 4629942635720439075}
   jumpController: {fileID: 6011555187754746457}
   dashController: {fileID: 5111428117897745220}
@@ -861,7 +859,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6440153436510376338}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f571a05676617f648a2c159d117910c2, type: 3}
   m_Name: 
