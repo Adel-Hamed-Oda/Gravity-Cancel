@@ -18,4 +18,19 @@ public class KillPlayer : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.TryGetComponent(out Entity entity))
+        {
+            if (entity.TeamColor == entityComponent.TeamColor) return;
+
+            // for now, I will add DIE() to the entity class later
+            PlayerController playerController = collider.GetComponent<PlayerController>();
+            if (playerController != null)
+            {
+                playerController.Die();
+            }
+        }
+    }
 }

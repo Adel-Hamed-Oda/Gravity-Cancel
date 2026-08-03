@@ -137,7 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0edf78a5376b8648a226b683b79441c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
-  NextLevelIndex: 0
+  nextLevelIndex: 0
+  successParticleEffect: {fileID: 6149683962062049999, guid: 59b65dd01dc09bd40b2c1cd56a678f3e, type: 3}
 --- !u!70 &3575788193537331419
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

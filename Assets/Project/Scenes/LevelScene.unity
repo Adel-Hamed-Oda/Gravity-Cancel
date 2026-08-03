@@ -194,6 +194,8 @@ MonoBehaviour:
   levelDefinitions:
   - {fileID: 11400000, guid: bf57f1931f18648409b63fe2c5442985, type: 2}
   - {fileID: 11400000, guid: 3abf1269aefcd28449974aec94e2306e, type: 2}
+  - {fileID: 11400000, guid: 1840e2c45ec565f4db16aa99b78a6ea0, type: 2}
+  startingLevelIndex: -3
 --- !u!1 &419714744
 GameObject:
   m_ObjectHideFlags: 0

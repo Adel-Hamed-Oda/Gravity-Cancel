@@ -5,6 +5,7 @@ public class TeleportDashController : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private GroundedChecker groundChecker; // Added reference to GroundChecker
 
     [Header("Controllers to Disable")]
     [SerializeField] private HorizontalMovementController horizontalMovementController;
@@ -15,10 +16,10 @@ public class TeleportDashController : MonoBehaviour
     public float maxTeleportDistance = 6f;
     public float maxWallThickness = 3f;
     public float minTeleportDistance = 3f;
-    public float wallOffset = 0.5f; // Added offset to prevent phasing/clipping
+    public float wallOffset = 0.5f;
     public float teleportChargeTime = 0.5f;
     public float teleportCooldown = 1f;
-    public float teleportStaminaReduction = 50f;
+    public int maxTeleportDashes = 1; // Replaced teleportStaminaReduction with a max counter
     public LayerMask obstacleLayer;
 
     [Header("Visuals")]
@@ -27,6 +28,13 @@ public class TeleportDashController : MonoBehaviour
 
     private float cooldownTimer = 0f;
     private bool isTeleporting = false;
+    private int currentTeleportDashes;
+
+    private void Start()
+    {
+        // Initialize with full teleport dashes
+        currentTeleportDashes = maxTeleportDashes;
+    }
 
     private void Update()
     {
@@ -35,7 +43,14 @@ public class TeleportDashController : MonoBehaviour
             cooldownTimer -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && cooldownTimer <= 0 && !isTeleporting && playerController.CurrentStamina >= teleportStaminaReduction)
+        // Reset the teleport dash counter when the player touches the ground
+        if (groundChecker != null && groundChecker.IsGrounded && !isTeleporting)
+        {
+            currentTeleportDashes = maxTeleportDashes;
+        }
+
+        // Teleport condition: Input pressed, cooldown is over, not already teleporting, and we have charges left
+        if (Input.GetKeyDown(KeyCode.C) && cooldownTimer <= 0 && !isTeleporting && currentTeleportDashes > 0)
         {
             AttemptTeleport();
         }
@@ -51,7 +66,7 @@ public class TeleportDashController : MonoBehaviour
         Vector2 offset = mouseWorldPosition - transform.position;
         Vector2 dashDirection = offset.x > 0 ? Vector2.right : Vector2.left;
 
-        // 2. Start checking from 6 units away, casting BACK towards the player
+        // 2. Start checking from max distance away, casting BACK towards the player
         Vector2 checkOrigin = (Vector2)transform.position + (dashDirection * maxTeleportDistance);
         Vector2 castDirection = -dashDirection;
 
@@ -62,19 +77,19 @@ public class TeleportDashController : MonoBehaviour
         {
             if (hit.distance <= 0.1f)
             {
-                // Hit immediately (<= 0.1 distance). This means the 6-unit mark is inside a wall. 
+                // Hit immediately (<= 0.1 distance). This means the max distance mark is inside a wall. 
                 // Teleport fails completely.
                 return;
             }
             else if (hit.distance <= maxWallThickness)
             {
-                // Hit the back of a wall after a short distance (<= 3 units).
+                // Hit the back of a wall after a short distance (<= maxWallThickness).
                 // Add the offset so the player spawns safely past the wall's surface.
                 targetPosition = hit.point + (dashDirection * wallOffset);
             }
             else
             {
-                // Hit a wall further than 3 units away. 
+                // Hit a wall further than maxWallThickness away. 
                 // This means the wall is very thin, or we are just in open space past it.
                 targetPosition = (Vector2)transform.position + (dashDirection * minTeleportDistance);
             }
@@ -94,7 +109,7 @@ public class TeleportDashController : MonoBehaviour
         Debug.Log("Destination: " + destination + ", Direction: " + direction);
 
         isTeleporting = true;
-        playerController.ReduceStamina(teleportStaminaReduction);
+        currentTeleportDashes--; // Consume one teleport charge here
 
         // Disable other movement controllers
         if (horizontalMovementController != null) horizontalMovementController.enabled = false;

@@ -11,6 +11,7 @@ public class LevelsManager : Manager<LevelsManager>
 
     [Header("Levels")]
     [SerializeField] private LevelDefinition[] levelDefinitions;
+    [SerializeField] private int startingLevelIndex = 0; // FOR TESTING ONLY, REMOVE LATER
 
     private GameObject currentLevel;
 
@@ -23,7 +24,7 @@ public class LevelsManager : Manager<LevelsManager>
             Debug.LogWarning("No level definitions found. Please ensure that the level definitions are assigned in the LevelsManager.");
             return;
         }
-        _InstantiateLevel(-1);
+        _InstantiateLevel(startingLevelIndex);
     }
 
     private void _InstantiateLevel(int index)
@@ -68,7 +69,7 @@ public class LevelsManager : Manager<LevelsManager>
         }
         transitionImage.color = new Color(0, 0, 0, 1);
 
-        Destroy(FindFirstObjectByType<PlayerController>().gameObject);
+        Destroy(FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include).gameObject);
         _InstantiateLevel(index);
 
         yield return new WaitForSeconds(1f);

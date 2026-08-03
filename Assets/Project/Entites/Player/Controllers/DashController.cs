@@ -3,23 +3,35 @@ using UnityEngine;
 
 public class DashController : MonoBehaviour
 {
-    [SerializeField] private PlayerController playerController;
     [SerializeField] private HorizontalMovementController horizontalMovementController;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private GroundedChecker groundChecker;
     [SerializeField] private GameObject dashParticlesPrefab;
 
     [Header("Dash Settings")]
     public float dashSpeed = 20f;
     public float dashCooldown = 1f;
-    public float dashStaminaReduction = 25f;
+    public int maxDashes = 1;
 
     private float dashCooldownTimer = 0f;
+    private int currentDashes;
+
+    private void Start()
+    {
+        // Initialize with full dashes
+        currentDashes = maxDashes;
+    }
 
     private void Update()
     {
         dashCooldownTimer -= Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.Z) && dashCooldownTimer <= 0 && playerController.CurrentStamina >= dashStaminaReduction)
+        if (groundChecker != null && groundChecker.IsGrounded)
+        {
+            currentDashes = maxDashes;
+        }
+
+        if (Input.GetKey(KeyCode.Z) && dashCooldownTimer <= 0 && currentDashes > 0)
         {
             Dash();
         }
@@ -39,9 +51,9 @@ public class DashController : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
         horizontalMovementController.CurrentHorizontalSpeed = dashDirection.x * dashSpeed;
-        dashCooldownTimer = dashCooldown;
 
-        playerController.ReduceStamina(dashStaminaReduction);
+        dashCooldownTimer = dashCooldown;
+        currentDashes--;
 
         GameObject dashParticles = Instantiate(dashParticlesPrefab, transform);
         dashParticles.transform.localScale = new Vector3(dashDirection.x, dashParticles.transform.localScale.y, dashParticles.transform.localScale.z);

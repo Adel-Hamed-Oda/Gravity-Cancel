@@ -1,28 +1,32 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    [SerializeField] private int NextLevelIndex;
+    [SerializeField] private int nextLevelIndex;
+    [SerializeField] private GameObject successParticleEffect;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            FreezePlayer(collision.gameObject);
-
-            LevelsManager.Instance.InstantiateLevel(NextLevelIndex);
+            StartCoroutine(TeleportSequenceCoroutine(collision.gameObject));
         }
     }
 
-    private void FreezePlayer(GameObject player)
+    private IEnumerator TeleportSequenceCoroutine(GameObject player)
+    {
+        TeleportPlayer(player);
+        yield return new WaitForSeconds(2f);
+        LevelsManager.Instance.InstantiateLevel(nextLevelIndex);
+    }
+    private void TeleportPlayer(GameObject player)
     {
         PlayerController playerController = player.GetComponent<PlayerController>();
         if (playerController != null)
         {
-            foreach (MonoBehaviour component in playerController.GetComponentsInChildren<MonoBehaviour>())
-            {
-                component.enabled = false;
-            }
+            playerController.gameObject.SetActive(false);
+            Instantiate(successParticleEffect, transform);
         }
     }
 }
