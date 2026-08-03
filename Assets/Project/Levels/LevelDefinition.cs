@@ -18,4 +18,10 @@ public class LevelDefinition : ScriptableObject
 
     [SerializeField] private Vector3 playerSpawnPosition;
     public Vector3 PlayerSpawnPosition { get { return playerSpawnPosition; } }
+
+    [SerializeField] private Sprite background1;
+    public Sprite Background1 { get { return background1; } }
+
+    [SerializeField] private Sprite background2;
+    public Sprite Background2 { get { return background2; } }
 }

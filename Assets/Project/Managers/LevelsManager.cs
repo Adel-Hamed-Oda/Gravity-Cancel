@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelsManager : Manager<LevelsManager>
 {
+    public event Action<LevelDefinition> OnLevelInstantiated;
+
     [SerializeField] private Image transitionImage;
 
     [Header("Levels")]
@@ -44,6 +47,7 @@ public class LevelsManager : Manager<LevelsManager>
 
                 playerManager.SpawnPlayer(definition.PlayerSpawnPosition);
 
+                OnLevelInstantiated?.Invoke(definition);
                 break;
             }
         }

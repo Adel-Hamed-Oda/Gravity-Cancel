@@ -17,3 +17,5 @@ MonoBehaviour:
   description: The one where you learn how to move and jump
   levelPrefab: {fileID: 2561948820335809770, guid: 941b784a27d45144daa54a043d6c0ac1, type: 3}
   playerSpawnPosition: {x: 0, y: 0, z: 0}
+  background1: {fileID: 4544235448077845365, guid: 19fd84dc91c00b14288877f843d9e9d0, type: 3}
+  background2: {fileID: 0}

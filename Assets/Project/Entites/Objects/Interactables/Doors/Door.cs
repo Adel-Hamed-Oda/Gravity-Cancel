@@ -19,12 +19,9 @@ public class Door : MonoBehaviour
         PlayerController playerController = player.GetComponent<PlayerController>();
         if (playerController != null)
         {
-            playerController.enabled = false;
-            Rigidbody2D rb = playerController.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            foreach (MonoBehaviour component in playerController.GetComponentsInChildren<MonoBehaviour>())
             {
-                rb.linearVelocity = Vector2.zero;
-                rb.bodyType = RigidbodyType2D.Kinematic;
+                component.enabled = false;
             }
         }
     }
