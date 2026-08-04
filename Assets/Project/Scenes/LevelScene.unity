@@ -195,7 +195,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bf57f1931f18648409b63fe2c5442985, type: 2}
   - {fileID: 11400000, guid: 3abf1269aefcd28449974aec94e2306e, type: 2}
   - {fileID: 11400000, guid: 1840e2c45ec565f4db16aa99b78a6ea0, type: 2}
-  startingLevelIndex: -3
+  - {fileID: 11400000, guid: c67e7ee82444c6847ad6896ca817cf0f, type: 2}
+  - {fileID: 11400000, guid: 088e0fe2bb230584293cf4a88f4862bc, type: 2}
+  startingLevelIndex: -1
 --- !u!1 &419714744
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,7 +1081,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 9999
   m_TargetDisplay: 0
 --- !u!224 &1947757242
 RectTransform:

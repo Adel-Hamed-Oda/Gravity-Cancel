@@ -24,6 +24,12 @@ public class LevelsManager : Manager<LevelsManager>
             Debug.LogWarning("No level definitions found. Please ensure that the level definitions are assigned in the LevelsManager.");
             return;
         }
+
+        StartCoroutine(FirstLevelInstantate()); // NOTE THIS IS TEMPORARY, REMOVE LATER
+    }
+    private IEnumerator FirstLevelInstantate() // NOTE THIS IS TEMPORARY, REMOVE LATER
+    {
+        yield return new WaitForSeconds(0.1f);
         _InstantiateLevel(startingLevelIndex);
     }
 

@@ -18,10 +18,12 @@ public class CameraPositionLimiter : MonoBehaviour
 
     private float GetMinCameraY()
     {
+        if (PlayerManager.Instance == null) return 0f;
         return PlayerManager.Instance.minPlayerHeight + playerHeightOffset;
     }
     private float GetMaxCameraY()
     {
+        if (PlayerManager.Instance == null) return 0f;
         return PlayerManager.Instance.maxPlayerHeight - playerHeightOffset;
     }
 }
