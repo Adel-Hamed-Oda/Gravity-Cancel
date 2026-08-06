@@ -197,7 +197,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1840e2c45ec565f4db16aa99b78a6ea0, type: 2}
   - {fileID: 11400000, guid: c67e7ee82444c6847ad6896ca817cf0f, type: 2}
   - {fileID: 11400000, guid: 088e0fe2bb230584293cf4a88f4862bc, type: 2}
-  startingLevelIndex: -5
+  - {fileID: 11400000, guid: 57059df764d2aee489290fa0b61d90ae, type: 2}
+  startingLevelIndex: -6
 --- !u!1 &419714744
 GameObject:
   m_ObjectHideFlags: 0
