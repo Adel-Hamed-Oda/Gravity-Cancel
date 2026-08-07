@@ -374,7 +374,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 088e0fe2bb230584293cf4a88f4862bc, type: 2}
   - {fileID: 11400000, guid: 57059df764d2aee489290fa0b61d90ae, type: 2}
   - {fileID: 11400000, guid: 7f8fd9f7f60c27e489d57f37fd5ffe68, type: 2}
-  startingLevelIndex: -7
+  - {fileID: 11400000, guid: cd426681bc1e34148a2430137a120095, type: 2}
+  - {fileID: 11400000, guid: 6bc241561408d8042b5b26936e627aed, type: 2}
+  startingLevelIndex: -1
   isRestarting: 0
 --- !u!114 &280038924
 MonoBehaviour:
@@ -621,7 +623,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -9999
   m_TargetDisplay: 0
 --- !u!224 &419714749
 RectTransform:
