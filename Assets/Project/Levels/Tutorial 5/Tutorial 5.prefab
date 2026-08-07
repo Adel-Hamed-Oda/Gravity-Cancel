@@ -11212,6 +11212,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Red Locked Door
       objectReference: {fileID: 0}
+    - target: {fileID: 5362841025328953061, guid: c0fe61a0d84b5c74ea4fb637650ef746, type: 3}
+      propertyPath: nextLevelIndex
+      value: -6
+      objectReference: {fileID: 0}
     - target: {fileID: 8412933025425866517, guid: c0fe61a0d84b5c74ea4fb637650ef746, type: 3}
       propertyPath: m_LocalPosition.x
       value: 25

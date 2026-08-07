@@ -16,15 +16,10 @@ public class SpeedLimitController : MonoBehaviour
     {
         if (rb == null) return;
 
-        Vector2 currentVelocity = rb.linearVelocity; // Use rb.velocity if using Unity 2022 or older
-
-        // Clamp Horizontal Velocity (-maxLeft to +maxRight)
+        Vector2 currentVelocity = rb.linearVelocity;
         float clampedX = Mathf.Clamp(currentVelocity.x, -maxLeftSpeed, maxRightSpeed);
-
-        // Clamp Vertical Velocity (-maxDown to +maxUp)
         float clampedY = Mathf.Clamp(currentVelocity.y, -maxDownSpeed, maxUpSpeed);
 
-        // Reapply clamped velocity
         rb.linearVelocity = new Vector2(clampedX, clampedY);
     }
 }

@@ -13,6 +13,7 @@ public class LevelsManager : Manager<LevelsManager>
     [SerializeField] private LevelDefinition[] levelDefinitions;
     [SerializeField] private int startingLevelIndex = 0; // FOR TESTING ONLY, REMOVE LATER
 
+    [HideInInspector] public bool isRestarting = false;
     private GameObject currentLevel;
 
     private void Start()
@@ -31,35 +32,6 @@ public class LevelsManager : Manager<LevelsManager>
     {
         yield return new WaitForSeconds(0.1f);
         _InstantiateLevel(startingLevelIndex);
-    }
-
-    private void _InstantiateLevel(int index)
-    {
-        foreach (LevelDefinition definition in levelDefinitions)
-        {
-            if (definition.LevelIndex == index)
-            {
-                if (currentLevel != null)
-                {
-                    DestroyImmediate(currentLevel);
-                }
-                currentLevel = Instantiate(definition.LevelPrefab);
-
-                PlayerManager playerManager = currentLevel.GetComponent<PlayerManager>();
-                if (playerManager == null)
-                {
-                    Debug.LogWarning("No player manager found in the level prefab. Please ensure that the level prefab has a PlayerManager component.");
-                    return;
-                }
-
-                playerManager.SpawnPlayer(definition.PlayerSpawnPosition);
-
-                OnLevelInstantiated?.Invoke(definition);
-                break;
-            }
-        }
-
-        Debug.LogWarning($"Level with index {index} not found. Please ensure that the level index is correct and that the level definition exists.");
     }
 
     public void InstantiateLevel(int index)
@@ -85,5 +57,61 @@ public class LevelsManager : Manager<LevelsManager>
             yield return null;
         }
         transitionImage.color = new Color(0, 0, 0, 0);
+    }
+    private void _InstantiateLevel(int index)
+    {
+        foreach (LevelDefinition definition in levelDefinitions)
+        {
+            if (definition.LevelIndex == index)
+            {
+                if (currentLevel != null)
+                {
+                    DestroyImmediate(currentLevel);
+                }
+                currentLevel = Instantiate(definition.LevelPrefab);
+                currentLevel.name = definition.LevelName;
+
+                PlayerManager playerManager = currentLevel.GetComponent<PlayerManager>();
+                if (playerManager == null)
+                {
+                    Debug.LogWarning("No player manager found in the level prefab. Please ensure that the level prefab has a PlayerManager component.");
+                    return;
+                }
+
+                playerManager.SpawnPlayer(definition.PlayerSpawnPosition);
+
+                OnLevelInstantiated?.Invoke(definition);
+                break;
+            }
+        }
+
+        Debug.LogWarning($"Level with index {index} not found. Please ensure that the level index is correct and that the level definition exists.");
+    }
+
+    public void RestartLevel()
+    {
+        isRestarting = true;
+        FindAnyObjectByType<PlayerController>().gameObject.SetActive(false);
+        if (currentLevel == null)
+        {
+            Debug.LogWarning("No current level to restart. Please ensure that a level is instantiated before attempting to restart.");
+            return;
+        }
+        LevelDefinition currentLevelDefinition = null;
+        foreach (LevelDefinition definition in levelDefinitions)
+        {
+            if (definition.LevelName == currentLevel.name)
+            {
+                currentLevelDefinition = definition;
+                break;
+            }
+        }
+        if (currentLevelDefinition == null)
+        {
+            Debug.LogWarning("Current level definition not found. Please ensure that the level prefab is correctly assigned in the LevelsManager.");
+            return;
+        }
+        InstantiateLevel(currentLevelDefinition.LevelIndex);
+        isRestarting = false;
     }
 }

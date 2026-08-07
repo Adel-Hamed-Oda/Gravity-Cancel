@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class PressurePlate : SignalProvider
+public class Button : SignalProvider
 {
     [Header("References")]
     [SerializeField] private SpriteRenderer pressurePlateSpriteRenderer;
@@ -8,43 +9,43 @@ public class PressurePlate : SignalProvider
     [SerializeField] private Sprite deactivatedPressurePlate;
 
     private bool isActivated = false;
-    private int objectsOnPlate = 0;
+    private int objectsOnButton = 0;
 
     private void Start()
     {
-        UpdatePressurePlateSprite();
+        UpdateButtonSprite();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        objectsOnPlate++;
+        objectsOnButton++;
 
-        if (objectsOnPlate > 0 && !isActivated)
+        if (objectsOnButton > 0 && !isActivated)
         {
             isActivated = true;
             Activate();
-            UpdatePressurePlateSprite();
+            UpdateButtonSprite();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        objectsOnPlate--;
+        objectsOnButton--;
 
-        if (objectsOnPlate < 0)
+        if (objectsOnButton < 0)
         {
-            objectsOnPlate = 0;
+            objectsOnButton = 0;
         }
 
-        if (objectsOnPlate == 0 && isActivated)
+        if (objectsOnButton == 0 && isActivated)
         {
             isActivated = false;
             Deactivate();
-            UpdatePressurePlateSprite();
+            UpdateButtonSprite();
         }
     }
 
-    private void UpdatePressurePlateSprite()
+    private void UpdateButtonSprite()
     {
         if (pressurePlateSpriteRenderer == null) return;
 
