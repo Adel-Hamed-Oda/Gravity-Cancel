@@ -111,6 +111,9 @@ public class LevelsManager : Manager<LevelsManager>
             Debug.LogWarning("Current level definition not found. Please ensure that the level prefab is correctly assigned in the LevelsManager.");
             return;
         }
+
+        GravityManager.Instance.EnableGravity();
+
         InstantiateLevel(currentLevelDefinition.LevelIndex);
         isRestarting = false;
     }
